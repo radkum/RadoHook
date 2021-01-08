@@ -27,7 +27,7 @@ private:
 
 public:
 	bool createHook(LPVOID pOriginFun, LPVOID pNewFun);
-	bool disableHook(LPVOID pOriginFun);
+	bool removeHook(LPVOID pOriginFun);
 
 	BYTE* getBufferWithOriginFun(LPVOID currFun);
 	bool restoreOriginFun(LPVOID pOriginFun, BYTE jmpBuffer[16]);

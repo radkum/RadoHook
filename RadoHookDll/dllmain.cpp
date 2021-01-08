@@ -37,7 +37,7 @@ bool __cdecl DisableHook(LPVOID pOriginFun, LPVOID pNewFun)
 	if (isDetached)
 		return true;
 
-	return g_hookCreator.disableHook(pOriginFun);
+	return g_hookCreator.removeHook(pOriginFun);
 }
 
 extern "C" __declspec(dllexport)

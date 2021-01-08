@@ -125,7 +125,7 @@ bool HookEngine::createHook(LPVOID pOriginFun, LPVOID pNewFun)
 	return true;
 }
 
-bool HookEngine::disableHook(LPVOID pOriginFun)
+bool HookEngine::removeHook(LPVOID pOriginFun)
 {
 	DWORD oldProtect = 0;
 	::VirtualProtect(pOriginFun, JMP_BUF_SIZE, PAGE_EXECUTE_READWRITE, &oldProtect);
