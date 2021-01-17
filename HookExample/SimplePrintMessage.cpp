@@ -5,8 +5,13 @@
 DWORD WINAPI myGetCurrentDirectoryA(DWORD nBufferLength, LPSTR buffer);
 
 //for static lib
-#include "../RadoHookLib/HookEngine.h"
-#pragma comment(lib, "RadoHookLib.lib")
+#include "../RadoHook/HookEngine.h"
+#ifndef _WIN64
+#pragma comment(lib, "RadoHook_x32.lib")
+#else
+#pragma comment(lib, "RadoHook_x64.lib")
+#endif
+
 
 //for dynamic lib
 

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplePrintMessage", "HookExample\SimplePrintMessage.vcxproj", "{83A29358-C572-42A2-9515-C381455AF1B0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RadoHookLib", "RadoHookLib\RadoHookLib.vcxproj", "{32AD94D5-75B2-4297-9309-5101C54D5845}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RadoHook", "RadoHook\RadoHook.vcxproj", "{32AD94D5-75B2-4297-9309-5101C54D5845}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
