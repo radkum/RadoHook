@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplePrintMessage", "HookE
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RadoHookLib", "RadoHookLib\RadoHookLib.vcxproj", "{32AD94D5-75B2-4297-9309-5101C54D5845}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RadoHookDll", "RadoHookDll\RadoHookDll.vcxproj", "{5CFF6D17-1806-4650-91EF-9CE77F52CA0C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -33,14 +31,6 @@ Global
 		{32AD94D5-75B2-4297-9309-5101C54D5845}.Release|x64.Build.0 = Release|x64
 		{32AD94D5-75B2-4297-9309-5101C54D5845}.Release|x86.ActiveCfg = Release|Win32
 		{32AD94D5-75B2-4297-9309-5101C54D5845}.Release|x86.Build.0 = Release|Win32
-		{5CFF6D17-1806-4650-91EF-9CE77F52CA0C}.Debug|x64.ActiveCfg = Debug|x64
-		{5CFF6D17-1806-4650-91EF-9CE77F52CA0C}.Debug|x64.Build.0 = Debug|x64
-		{5CFF6D17-1806-4650-91EF-9CE77F52CA0C}.Debug|x86.ActiveCfg = Debug|Win32
-		{5CFF6D17-1806-4650-91EF-9CE77F52CA0C}.Debug|x86.Build.0 = Debug|Win32
-		{5CFF6D17-1806-4650-91EF-9CE77F52CA0C}.Release|x64.ActiveCfg = Release|x64
-		{5CFF6D17-1806-4650-91EF-9CE77F52CA0C}.Release|x64.Build.0 = Release|x64
-		{5CFF6D17-1806-4650-91EF-9CE77F52CA0C}.Release|x86.ActiveCfg = Release|Win32
-		{5CFF6D17-1806-4650-91EF-9CE77F52CA0C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
