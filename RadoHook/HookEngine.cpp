@@ -63,24 +63,14 @@ bool HookEngine::createHook(LPVOID pOriginFun, LPVOID pNewFun)
 	DWORD oldProtect = 0;
 	ASSERT_BOOL(::VirtualProtect(pOriginFun, JMP_BUF_SIZE, PAGE_EXECUTE_READWRITE, &oldProtect));
 
-	//create originFunPrologBuf and set there execute permission
+	//copy to originFunPrologBuf 16 first bytes of origin fun
 	::memcpy(m_mapNewFunToOriginFunPrologBuf[pNewFun].data(), pOriginFun, JMP_BUF_SIZE);
-
-	BYTE* originFunPrologBuf = m_mapNewFunToOriginFunPrologBuf[pNewFun].data();
-
-	
-	createJmp(upNewFun + JMP_BUF_SIZE, originFunPrologBuf + JMP_BUF_SIZE);
-	
-
-	DWORD dummy = 0;
-	ASSERT_BOOL(::VirtualProtect(originFunPrologBuf, PROLOG_FUN_BUF_SIZE, PAGE_EXECUTE_READWRITE, &dummy));
-	//end
-
 
 	//replace origin fun prolog with jmp to our newFun
 	createJmp(upNewFun, (BYTE*)pOriginFun);
 
 	//restore old permits for orginFun
+	DWORD dummy = 0;
 	ASSERT_BOOL(::VirtualProtect(pOriginFun, JMP_BUF_SIZE, oldProtect, &dummy));
 
 	m_mapOriginFunToNewFun[pOriginFun] = pNewFun;
@@ -88,12 +78,17 @@ bool HookEngine::createHook(LPVOID pOriginFun, LPVOID pNewFun)
 }
 
 //methods
-bool HookEngine::restoreOriginFun(LPVOID pOriginFun, BYTE jmpBuffer[JMP_BUF_SIZE])
+bool HookEngine::restoreOriginFun(LPVOID pOriginFun, BYTE outJmpBuffer[JMP_BUF_SIZE])
 {
+	//at the beggining check, if this funciton is hooked
+	ASSERT_BOOL(m_mapOriginFunToNewFun.count(pOriginFun) > 0);
+
 	//set read write permits 
 	DWORD oldProtect = 0, dummy = 0;
 	ASSERT_BOOL(::VirtualProtect(pOriginFun, JMP_BUF_SIZE, PAGE_EXECUTE_READWRITE, &oldProtect));
-	::memcpy(jmpBuffer, pOriginFun, JMP_BUF_SIZE);
+	
+	//copy jmp to buffer
+	::memcpy(outJmpBuffer, pOriginFun, JMP_BUF_SIZE);
 
 	LPVOID pNewFun = m_mapOriginFunToNewFun[pOriginFun];
 	::memcpy(pOriginFun, m_mapNewFunToOriginFunPrologBuf[pNewFun].data(), JMP_BUF_SIZE);
@@ -103,6 +98,9 @@ bool HookEngine::restoreOriginFun(LPVOID pOriginFun, BYTE jmpBuffer[JMP_BUF_SIZE
 
 bool HookEngine::restoreHook(LPVOID pOriginFun, BYTE jmpBuffer[JMP_BUF_SIZE])
 {
+	//at the beggining check, if this funciton is hooked
+	ASSERT_BOOL(m_mapOriginFunToNewFun.count(pOriginFun) > 0);
+
 	//set read write permits 
 	DWORD oldProtect = 0, dummy = 0;
 
@@ -118,21 +116,20 @@ bool HookEngine::restoreHook(LPVOID pOriginFun, BYTE jmpBuffer[JMP_BUF_SIZE])
 
 bool HookEngine::removeHook(LPVOID pOriginFun)
 {
+	//at the beggining check, if this funciton is hooked
+	ASSERT_BOOL(m_mapOriginFunToNewFun.count(pOriginFun) > 0);
+
 	DWORD oldProtect = 0;
 	::VirtualProtect(pOriginFun, JMP_BUF_SIZE, PAGE_EXECUTE_READWRITE, &oldProtect);
 
-	ASSERT_BOOL(m_mapOriginFunToNewFun.count(pOriginFun) > 0);
 	LPVOID pNewFun = m_mapOriginFunToNewFun[pOriginFun];
 
 	ASSERT_BOOL(m_mapNewFunToOriginFunPrologBuf.count(pNewFun) > 0);
-	BYTE* originFunPrologBuf = m_mapNewFunToOriginFunPrologBuf[pNewFun].data();
-	::memcpy(pOriginFun, originFunPrologBuf, JMP_BUF_SIZE);
+	::memcpy(pOriginFun, m_mapNewFunToOriginFunPrologBuf[pNewFun].data(), JMP_BUF_SIZE);
 
 	DWORD dummy = 0;
 	ASSERT_BOOL(::VirtualProtect(pOriginFun, JMP_BUF_SIZE, oldProtect, &dummy));
 
-	//we can restore previous permits for buffer but it is not neccessary, because in next step we erase it
-	//ASSERT_BOOL(::VirtualProtect(originFunPrologBuf, JMP_BUF_SIZE, bufferOldProtect, &dummy));
 	m_mapNewFunToOriginFunPrologBuf.erase(pNewFun);
 	m_mapOriginFunToNewFun.erase(pOriginFun);
 	return true;
