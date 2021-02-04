@@ -34,12 +34,12 @@ absolute jmp
 	to consider:
 	 9A cp CALL ptr16:32 Call far, absolute, address given in operand
 */
-void HookEngine::createJmp(ULONG_PTR pFun, BYTE jmpBuffer[JMP_BUF_SIZE])
+void HookEngine::createJmp(ULONG_PTR pFun, BYTE outJmpBuffer[JMP_BUF_SIZE])
 {
 	//set buffer
-	::memset(jmpBuffer, 0xCC, JMP_BUF_SIZE);
+	::memset(outJmpBuffer, 0xCC, JMP_BUF_SIZE);
 
-	BYTE* ptr = jmpBuffer;
+	BYTE* ptr = outJmpBuffer;
 
 	*(WORD*)ptr = Far_Jmp_Opc;
 	ptr += sizeof(Far_Jmp_Opc);

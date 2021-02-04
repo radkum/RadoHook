@@ -1,16 +1,13 @@
 #pragma once
 
-#include <SDKDDKVer.h>
-
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
-// Windows Header Files
-#include <windows.h>
-
+//includes
 #include <map>
 #include <array>
+#include <windows.h>
 
+//defines
 #define ASSERT_BOOL(x)		if((x) == false) return false;
-#define JMP_BUF_SIZE		16
+#define JMP_BUF_SIZE		0x10 
 
 class HookEngine
 {
@@ -21,13 +18,13 @@ private:
 	std::map<LPVOID, LPVOID> m_mapOriginFunToNewFun;
 
 	//methods
-	void createJmp(ULONG_PTR pFun, BYTE jmpBuffer[JMP_BUF_SIZE]);
+	void createJmp(ULONG_PTR pFun, BYTE outJmpBuffer[JMP_BUF_SIZE]);
 
 public:
 	bool createHook(LPVOID pOriginFun, LPVOID pNewFun);
 	bool removeHook(LPVOID pOriginFun);
 
-	bool restoreOriginFun(LPVOID pOriginFun, BYTE jmpBuffer[JMP_BUF_SIZE]);
+	bool restoreOriginFun(LPVOID pOriginFun, BYTE outJmpBuffer[JMP_BUF_SIZE]);
 	bool restoreHook(LPVOID pOriginFun, BYTE jmpBuffer[JMP_BUF_SIZE]);
 };
 
