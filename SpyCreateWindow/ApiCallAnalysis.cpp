@@ -91,7 +91,15 @@ DWORD injectDll(HANDLE hProcess, std::wstring libPath)
 
 	if (!hLibModule)
 	{
-		LogHelper::PrintLog(LogLevel::Warning, "hLibModule is nullptr: " + GetLastErrorAsString());
+		if (::GetLastError() == 183)
+		{
+			//incorrect architecture
+			std::cout << "ERROR: Incorrect architecture. " << ((sizeof(size_t) == 4) ? "Please use x64 version" : "Please use x32 version") << std::endl;
+		}
+		else
+		{
+			LogHelper::PrintLog(LogLevel::Warning, "hLibModule is nullptr: " + GetLastErrorAsString());
+		}
 	}
 
 	::CloseHandle(hThread);

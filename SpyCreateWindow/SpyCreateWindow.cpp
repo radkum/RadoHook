@@ -86,7 +86,8 @@ int main(int argc, char* argv[])
 
 	if (!performApiCallAnalysis(wzFileName, apiCallsReportPath))
 	{
-		std::cout << "Failed to perform api call analysis: " << GetLastErrorAsString() << std::endl;
+		std::cout << "Failed to perform api call analysis " << std::endl;
+		LogHelper::PrintLog(LogLevel::Error, "Failed to perform api call analysis " + ::GetLastErrorAsString());
 		return -1;
 	}
 
