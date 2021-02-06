@@ -39,7 +39,7 @@ auto CallOriginFun(T fun, Targs... args)
 	BYTE jmpBuffer[JMP_BUF_SIZE];
 	hookEngine->restoreOriginFun((LPVOID)fun, jmpBuffer);
 	auto x = fun(args...);
-	hookEngine->restoreHook((LPVOID)::GetCurrentDirectoryA, jmpBuffer);
+	hookEngine->restoreHook((LPVOID)fun, jmpBuffer);
 
 	return x;
 }
