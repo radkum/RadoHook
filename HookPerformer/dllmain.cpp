@@ -10,8 +10,9 @@
 #pragma comment(lib, "RadoHook_x64.lib")
 #endif
 
-//extern std::string g_reportFileName;
 extern std::ofstream g_reportStream;
+extern HMODULE g_hWin32;
+extern NtUserCreateWindowEx_FunType g_NtUserCreateWindowEx;
 
 BOOL APIENTRY DllMain( HMODULE hModule, DWORD  reason, LPVOID lpReserved)
 {
@@ -29,15 +30,41 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  reason, LPVOID lpReserved)
 		}
 
 		g_reportStream.open(pathBuff);
-		logToFile("Success to assign pathbuff");
+		//logToFile("Success to assign pathbuff");
 
-
-		if (!createHook(::CreateWindowExW, myCreateWindowExW))
+		//NtUserCreateWindowEx
+		g_hWin32 = ::LoadLibraryA("win32u.dll");
+		if (!g_hWin32)
 		{
-			logToFile("CreateWindowExW Hook creation failed");
+			logToFile("failed to get handle to win32u.dll module");
 			return FALSE;
 		}
 
+		g_NtUserCreateWindowEx = (NtUserCreateWindowEx_FunType) ::GetProcAddress(g_hWin32, "NtUserCreateWindowEx");
+		if (!g_NtUserCreateWindowEx)
+		{
+			logToFile("failed to get NtUserCreateWindowEx function");
+			return FALSE;
+		}
+
+		if (!createHook(g_NtUserCreateWindowEx, myNtUserCreateWindowEx))
+		{
+			logToFile("NtUserCreateWindowEx Hook creation failed");
+			return FALSE;
+		}
+		//end NtUserCreateWindowEx
+
+		/*if (!createHook(::SendMessageA, mySendMessageA))
+		{
+			logToFile("OpenFile Hook creation failed");
+			return FALSE;
+		}
+
+		if (!createHook(::SendMessageW, mySendMessageW))
+		{
+			logToFile("OpenFile Hook creation failed");
+			return FALSE;
+		}*/
 		logToFile("Success to create hoook");
 
 		break;
@@ -46,7 +73,8 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  reason, LPVOID lpReserved)
     case DLL_THREAD_DETACH:
 		break;
     case DLL_PROCESS_DETACH:
-		removeHook(::CreateWindowExW);
+		removeHook(g_NtUserCreateWindowEx);
+		::FreeLibrary(g_hWin32);
 		g_reportStream.close();
         break;
     }
