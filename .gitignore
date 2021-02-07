@@ -189,3 +189,10 @@
 /Debug/reports/logOutput.txt
 /Debug/SpyCreateWindow.ilk
 /Debug/SpyCreateWindow.pdb
+/.vs/Hooks/v15/ipch/AutoPCH/338f27d38048b63b/LOGHELPER.ipch
+/.vs/Hooks/v15/ipch/AutoPCH/46ec19dfdd8e3d2/WINDOWSPROJECT.ipch
+/.vs/Hooks/v15/ipch/AutoPCH/afe9943e7ab82fd5/WINDOWSPROJECT.ipch
+/.vs/Hooks/v15/ipch/AutoPCH/d980534e946c2afa/WINDOWSPROJECT.ipch
+/Debug/log.txt
+/HookExample
+/HookPerformer/Debug/HookPerformer.Build.CppClean.log
