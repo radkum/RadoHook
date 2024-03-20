@@ -26,8 +26,15 @@ HWND NTAPI myNtUserCreateWindowEx(DWORD dwExStyle, PLARGE_STRING plstrClassName,
 	HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam, DWORD dwFlags, PVOID acbiBuffer, DWORD unknown1, PVOID unknown2);
 
 HFILE WINAPI myOpenFile(LPCSTR lpFileName, LPOFSTRUCT lpReOpenBuff, UINT uStyle);
-LRESULT WINAPI mySendMessageA(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 LRESULT WINAPI mySendMessageW(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
+VOID WINAPI mySleep(DWORD);
+BOOL WINAPI myBlockInput(BOOL fBlockIt);
+BOOL WINAPI mySetCursorPos(int x, int y);
+HINSTANCE WINAPI myShellExecuteA(HWND hWnd, LPCSTR lpOperation, LPCSTR lpFile, LPCSTR lpParameters, LPCSTR lpDirectory, INT nShowCmd);
+LSTATUS WINAPI myRegSetValueExA(HKEY hKey, LPCSTR lpValueName, DWORD reserved, DWORD dwType, const BYTE* lpData, DWORD cbData);
+BOOL WINAPI myBeep(DWORD dwFreq, DWORD dwDuration);
+int WINAPI myMessageBoxA(HWND hWnd, LPCSTR lpOperation, LPCSTR lpFile, INT nShowCmd);
+
 
 using NtUserCreateWindowEx_FunType = decltype(&myNtUserCreateWindowEx);
 

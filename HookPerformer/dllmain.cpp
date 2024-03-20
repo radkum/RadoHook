@@ -1,4 +1,5 @@
 #include "HookPerformer.h"
+#include "shellapi.h"
 #include <fstream>
 #include <string>
 
@@ -30,41 +31,48 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  reason, LPVOID lpReserved)
 		}
 
 		g_reportStream.open(pathBuff);
-		//logToFile("Success to assign pathbuff");
 
-		//NtUserCreateWindowEx
-		g_hWin32 = ::LoadLibraryA("win32u.dll");
-		if (!g_hWin32)
+		if (!createHook(::Sleep, mySleep))
 		{
-			logToFile("failed to get handle to win32u.dll module");
+			logToFile("Sleep Hook creation failed");
 			return FALSE;
 		}
 
-		g_NtUserCreateWindowEx = (NtUserCreateWindowEx_FunType) ::GetProcAddress(g_hWin32, "NtUserCreateWindowEx");
-		if (!g_NtUserCreateWindowEx)
+		if (!createHook(::BlockInput, myBlockInput))
 		{
-			logToFile("failed to get NtUserCreateWindowEx function");
+			logToFile("BlockInput Hook creation failed");
 			return FALSE;
 		}
 
-		if (!createHook(g_NtUserCreateWindowEx, myNtUserCreateWindowEx))
+		if (!createHook(::SetCursorPos, mySetCursorPos))
 		{
-			logToFile("NtUserCreateWindowEx Hook creation failed");
-			return FALSE;
-		}
-		//end NtUserCreateWindowEx
-
-		/*if (!createHook(::SendMessageA, mySendMessageA))
-		{
-			logToFile("OpenFile Hook creation failed");
+			logToFile("SetCursorPos Hook creation failed");
 			return FALSE;
 		}
 
-		if (!createHook(::SendMessageW, mySendMessageW))
+		if (!createHook(::ShellExecuteA, myShellExecuteA))
 		{
-			logToFile("OpenFile Hook creation failed");
+			logToFile("ShellExecuteA Hook creation failed");
 			return FALSE;
-		}*/
+		}
+
+		if (!createHook(::RegSetValueExA, myRegSetValueExA))
+		{
+			logToFile("RegSetValueExA Hook creation failed");
+			return FALSE;
+		}
+
+		if (!createHook(::Beep, myBeep))
+		{
+			logToFile("Beep Hook creation failed");
+			return FALSE;
+		}
+
+		if (!createHook(::MessageBoxA, myMessageBoxA))
+		{
+			logToFile("MessageBoxA Hook creation failed");
+			return FALSE;
+		}
 		logToFile("Success to create hoook");
 
 		break;
@@ -73,7 +81,13 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  reason, LPVOID lpReserved)
     case DLL_THREAD_DETACH:
 		break;
     case DLL_PROCESS_DETACH:
-		removeHook(g_NtUserCreateWindowEx);
+		removeHook(::Sleep);
+		removeHook(::BlockInput);
+		removeHook(::SetCursorPos);
+		removeHook(::ShellExecuteA);
+		removeHook(::RegSetValueExA);
+		removeHook(::Beep);
+		//removeHook(::MessageBoxA);
 		::FreeLibrary(g_hWin32);
 		g_reportStream.close();
         break;

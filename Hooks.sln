@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.645
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RadoHook", "RadoHook\RadoHook.vcxproj", "{32AD94D5-75B2-4297-9309-5101C54D5845}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HookPerformer", "HookPerformer\HookPerformer.vcxproj", "{5D188574-732B-4570-B105-0FF99F64F8E2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpyCreateWindow", "SpyCreateWindow\SpyCreateWindow.vcxproj", "{3233810F-9E85-4BE6-AEEA-B8A5828AC01E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{E077C329-9165-42AB-979B-E39B44C64CBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{3233810F-9E85-4BE6-AEEA-B8A5828AC01E}.Release|x64.Build.0 = Release|x64
 		{3233810F-9E85-4BE6-AEEA-B8A5828AC01E}.Release|x86.ActiveCfg = Release|Win32
 		{3233810F-9E85-4BE6-AEEA-B8A5828AC01E}.Release|x86.Build.0 = Release|Win32
+		{E077C329-9165-42AB-979B-E39B44C64CBC}.Debug|x64.ActiveCfg = Debug|x64
+		{E077C329-9165-42AB-979B-E39B44C64CBC}.Debug|x64.Build.0 = Debug|x64
+		{E077C329-9165-42AB-979B-E39B44C64CBC}.Debug|x86.ActiveCfg = Debug|Win32
+		{E077C329-9165-42AB-979B-E39B44C64CBC}.Debug|x86.Build.0 = Debug|Win32
+		{E077C329-9165-42AB-979B-E39B44C64CBC}.Release|x64.ActiveCfg = Release|x64
+		{E077C329-9165-42AB-979B-E39B44C64CBC}.Release|x64.Build.0 = Release|x64
+		{E077C329-9165-42AB-979B-E39B44C64CBC}.Release|x86.ActiveCfg = Release|Win32
+		{E077C329-9165-42AB-979B-E39B44C64CBC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

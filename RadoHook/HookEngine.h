@@ -43,3 +43,12 @@ auto CallOriginFun(T fun, Targs... args)
 
 	return x;
 }
+
+template<typename T, typename... Targs>
+auto CallVoidOriginFun(T fun, Targs... args)
+{
+	BYTE jmpBuffer[JMP_BUF_SIZE];
+	hookEngine->restoreOriginFun((LPVOID)fun, jmpBuffer);
+	fun(args...);
+	hookEngine->restoreHook((LPVOID)fun, jmpBuffer);
+}

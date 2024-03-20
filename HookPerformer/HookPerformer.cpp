@@ -77,3 +77,62 @@ char* allocateAndGetCStringFromPLargeString(PLARGE_STRING str)
 
 	return toRet;
 }
+
+VOID WINAPI mySleep(DWORD dwMiliseconds)
+{
+	char buffer[1024] = { 0 };
+	sprintf_s(buffer, "Sleep(%d)", dwMiliseconds);
+	logToFile(buffer);
+	//CallVoidOriginFun(::Sleep, 100);
+}
+
+BOOL WINAPI myBlockInput(BOOL fBlockIt)
+{
+	char buffer[1024] = { 0 };
+	sprintf_s(buffer, "BlockInput(%d)", fBlockIt);
+	logToFile(buffer);
+	return true;
+}
+
+BOOL WINAPI mySetCursorPos(int x, int y)
+{
+	char buffer[1024] = { 0 };
+	sprintf_s(buffer, "SetCursorPos(%d, %d)", x, y);
+	logToFile(buffer);
+	return true;
+}
+
+HINSTANCE WINAPI myShellExecuteA(HWND hWnd, LPCSTR lpOperation, LPCSTR lpFile, LPCSTR lpParameters, LPCSTR lpDirectory, INT nShowCmd)
+{
+	char buffer[1024] = { 0 };
+	sprintf_s(buffer, "ShellExecuteW(%p, \"%s\",\"%s\",\"%s\",\"%s\", %d)", hWnd, lpOperation, lpFile, lpParameters, lpDirectory, nShowCmd);
+	logToFile(buffer);
+	return nullptr;
+}
+
+LSTATUS WINAPI myRegSetValueExA(HKEY hKey, LPCSTR lpValueName, DWORD reserved, DWORD dwType, const BYTE* lpData, DWORD cbData)
+{
+	char data[1024] = { 0 };
+	strncpy_s(data, (char*) lpData, cbData);
+
+	char buffer[1024] = { 0 };
+	sprintf_s(buffer, "RegSetValueExW(%p, %s, %d, %d, %s, %d)", hKey, lpValueName, reserved, dwType, data, cbData);
+	logToFile(buffer);
+	return ERROR_SUCCESS;
+}
+
+BOOL WINAPI myBeep(DWORD dwFreq, DWORD dwDuration)
+{
+	char buffer[1024] = { 0 };
+	sprintf_s(buffer, "Beep(%d, %d)", dwFreq, dwDuration);
+	logToFile(buffer);
+	return true;
+}
+
+int WINAPI myMessageBoxA(HWND hWnd, LPCSTR lpOperation, LPCSTR lpFile, INT nShowCmd)
+{
+	char buffer[1024] = { 0 };
+	sprintf_s(buffer, "MessageBoxW(%p, \"%s\",\"%s\", %d)", hWnd, lpOperation, lpFile, nShowCmd);
+	logToFile(buffer);
+	return 0;
+}
